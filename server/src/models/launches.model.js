@@ -1,6 +1,6 @@
-const launches = require('./launches.mongoose')
+const launchesDatabase = require('./launches.mongoose')
 
-// const launches = new Map();
+const launches = new Map();
 
 let latestFlightNumber = 100;
 
@@ -21,8 +21,16 @@ function existsLaunchWithId(launchId){
     return launches.has(launchId);
 }
 
-function getAllLaunches(){
-    return Array.from(launches.values());
+async function saveLaunch(launch){
+    await launchesDatabase.updateOne({
+        flightNumber:launch.flightNumber,},
+        launch,{
+            upsert:true,
+        })
+}
+
+async function getAllLaunches(){
+    return await launchesDatabase.find({},{'_id':0,'_v':0});
 }
 
 function addNewLaunch(launch){
