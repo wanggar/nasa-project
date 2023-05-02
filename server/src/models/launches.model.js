@@ -1,4 +1,6 @@
-const launches = new Map();
+const launches = require('./launches.mongoose')
+
+// const launches = new Map();
 
 let latestFlightNumber = 100;
 
@@ -13,7 +15,7 @@ const launch = {
     success: true,
 };
 
-launches.set(launch.flightNumber,launch);
+// launches.set(launch.flightNumber,launch);
 
 function existsLaunchWithId(launchId){
     return launches.has(launchId);
